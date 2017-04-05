@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="testeFagron">
+<head>
+<meta charset="ISO-8859-1">
+<title>CRUD Pessoa</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+<!-- GRID -->
+<script type="text/javascript" src="js/jqxgrid/scripts/jquery-1.11.2.js"></script>	
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxcore.js"></script>
+
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxdata.js"></script> 
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.sort.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.storage.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.columnsreorder.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxgrid.selection.js"></script> 
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxpanel.js"></script>
+<script type="text/javascript" src="js/jqxgrid/jqwidgets/jqxcheckbox.js"></script>
+
+<!-- RequireJS -->
+<script type="text/javascript" data-main="js/include.js" src="js/jqxgrid/scripts/require.js"></script>
+
+<link rel="stylesheet" href="js/jqxgrid/jqwidgets/styles/jqx.base.css" type="text/css" />
+<link rel="stylesheet" href="js/jqxgrid/jqwidgets/styles/jqx.darkblue.css" type="text/css" />
+</head>
+<body ng-controller="cadastroPessoaController">
+
+<!-- PAGE CONTENT -->
+	<div layout="column"  layout-align="left left">
+		<md-input-container class="block" >
+	        <label>ID</label>
+	        <input ng-model="pessoa.id" disabled>
+        </md-input-container>
+	
+		<md-input-container class="block" >
+	        <label>Nome</label>
+	        <input ng-model="pessoa.nome" required maxlength="20">
+        </md-input-container>
+        
+        <md-input-container class="block" >
+	        <label>Sobrenome</label>
+	        <input ng-model="pessoa.sobrenome" required maxlength="30">
+        </md-input-container>
+        
+        <md-input-container class="block" >
+	     	<label>Profissão</label>
+	    	<md-select ng-model="pessoa.profissao">
+	       		<md-option ng-repeat="profissao in profissoes" ng-value="profissao" ng-disabled="$index === 1">
+	         		{{profissao}}
+	       		</md-option>
+	    	</md-select>
+	    </md-input-container>
+        
+        <div class="block" >
+	      <md-datepicker ng-model="pessoa.nascimento" md-placeholder="Nascimento" required></md-datepicker>
+	    </div>
+	    
+	      <md-button class="md-raised md-primary" ng-click="inserir()" ng-show="!editando">Inserir</md-button>
+	      <md-button class="md-raised md-primary" ng-click="alterar()" ng-show="editando">Alterar</md-button>
+	</div>
+	
+	<!-- TABELA JQWIDGETS-->
+	<div id='jqxWidget' layout="row" layout-align="center center" ng-show="false">
+        <div id="jqxgrid">
+        </div>
+    </div>
+	
+	<!-- TABELA -->
+	<div layout="row" layout-align="center center" ng-show="true">
+		<table width="100%">
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Profissao</th>
+				<th>Idade</th>
+				<th>Ações</th>
+			</tr>
+			<tr ng-repeat="p in pessoas">
+				<th>{{p.id}}</th>
+				<th>{{p.nome}}</th>
+				<th>{{p.profissao}}</th>
+				<th>{{p.idade}}</th>
+				<th>
+					<md-button class="md-raised md-primary" ng-click="selecionar(p)">Editar</md-button>
+					<md-button class="md-raised md-primary" ng-click="excluir(p.id)">Excluir</md-button>
+				</th>
+			</tr>
+		</table>
+	</div>
+</body>
+
+<!-- CONTROLLER SCRIPTS -->
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="cadastroPessoaController.js"></script>
+
+</html>
